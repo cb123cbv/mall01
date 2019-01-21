@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.pojo.Mall_attr;
+
 import com.jk.pojo.Mall_sku;
 import com.jk.pojo.Product;
 

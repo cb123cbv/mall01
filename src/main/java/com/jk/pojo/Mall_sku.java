@@ -14,12 +14,13 @@ import lombok.Data;
  */
 @Data
 public class Mall_sku {
- Integer id;
- Integer shp_id;
- Integer kc;
- Double jg;
- String chjshj;
- String sku_mch;
- Integer sku_xl;
- String kcdz;
+ private  Integer id;
+ private  Integer shp_id;
+ private  Integer kc;
+ private  Double  jg;
+ private  String chjshj;
+ private  String sku_mch;
+ private  Integer sku_xl;
+ private  String kcdz;
+ private  String  shp_mchName;
 }
