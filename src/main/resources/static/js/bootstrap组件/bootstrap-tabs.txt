@@ -1,0 +1,37 @@
+step1:引入
+<link rel="stylesheet"
+	href="<%=path%>/js/bootStrap-addTabs/bootstrap.addtabs.css"></link>
+
+<script type="text/javascript"
+	src="<%=path%>/js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+
+
+
+
+step2:dom载体
+<div id="myTabs">
+		
+	<div >
+		<!-- 新选项卡 -->
+		<ul class="nav nav-tabs" >
+		 
+		</ul>
+
+		<!-- 选项卡下内容 -->
+		<div class="tab-content">
+
+		</div>
+	</div>
+</div>
+
+
+
+step3:添加(一定要有id)
+$.addtabs.add({
+		id:node.id,
+		title:node.text,
+		url:node.href
+	});
+
+
+$.addtabs({iframeHeight: 650});(控制高度)
