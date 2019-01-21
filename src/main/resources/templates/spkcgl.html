@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--引入jquery 一定放在第一行  -->
+    <script src="/jquery-2.1.1.min.js"></script>
+
+    <!--引入easyui的样式 -->
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css"></link>
+
+    <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/easyui1.5/locale/easyui-lang-zh_CN.js"></script>
+
 </head>
+<script type="text/javascript" th:inline="none">
+$(function () {
+    datagridQuery()
+})
+
+function datagridQuery(){
+    $('#dg').datagrid({
+        url:'/getMall_Sku',
+        fit:true,
+        toolbar: '#tb',
+        striped:true,
+        pagination:true,
+        pageList:[1,2,3,4,5,6,7,8],
+        pageSize: 5,
+        checkOnSelect:false,
+        rowStyler: function(index,row){
+            if (index%2==0){
+                return 'background-color:#6293BB;color:#fff;';
+            }
+        },
+        columns:[[
+            {field:'xxx',title:'id',width:'5%',checkbox:true},
+            {field:'id',title:'编号',width:100},
+            {field:'shp_mchName',title:'商品名称',width:100},
+            {field:'kc',title:'库存',width:100,align:'right'},
+            {field:'jg',title:'价格',width:100,align:'right',},
+            {field:'chjshj',title:'创建时间',width:100,align:'right'},
+            {field:'sku_mch',title:'sku名称',width:100,align:'right'},
+            {field:'sku_xl',title:'销量',width:100,align:'right'},
+            {field:'kcdz',title:'库存地址',width:100,align:'right'},
+            {field:'1',title:'操作',width:150,align:'right',
+                formatter:function(value,row,index){
+
+
+                    content="| <a href='javascript:void(0)' onclick=delOne("+row.id+",'"+row.shp_mchName+"')> 删除</a>"
+                    return content;
+                }
+            },
+        ]]
+    });
+}
+
+     //删除
+function delBooks(id) {
+    $.ajax({
+        url:"/delMall_Sku",
+        type:"POST",
+        data:{id:id},
+        success:function(pageUtil){
+            $("#dg").datagrid('reload');
+            $.messager.show({
+                title:'消息',
+                msg:'删除成功!!',
+                timeout:5000,
+                showType:'slide'
+            })
+        },
+        error:function(){
+            alert("失败了");
+        }
+    })
+}
+//单个删除
+function delOne(id,bname){
+    $.messager.confirm('确认','您确认想要删除'+bname+'这条记录吗？',function(r){
+        if (r){
+            delBooks(id)
+        }
+    });
+}
+</script>
 <body>
-商品库存管理
+<div id="tb">
+    <a id="btn"  class="easyui-linkbutton" data-options="iconCls:'icon-save'">新增</a>
+</div>
+<table id="dg"></table>
 </body>
 </html>

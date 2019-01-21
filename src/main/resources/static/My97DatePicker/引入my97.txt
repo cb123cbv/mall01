@@ -1,0 +1,8 @@
+
+第一步:引入文件
+<script src="<%=request.getContextPath()%>/My97DatePicker/WdatePicker.js"></script>
+
+第二步:使用my97
+<input  type="text" onClick="WdatePicker()"/>
+
+注:只需加上 onClick="WdatePicker()" 属性即可

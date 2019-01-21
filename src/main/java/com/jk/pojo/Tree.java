@@ -20,5 +20,5 @@ public class Tree {
  String text;
  Integer pid;
  String url;
- List<Tree> children;;
+ List<Tree> children;
 }

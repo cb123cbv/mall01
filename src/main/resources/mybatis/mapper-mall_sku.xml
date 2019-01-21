@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.Mall_SkuMapper">
+<select id="getMall_Sku" resultType="com.jk.pojo.Mall_Sku">
+    select *,p.shp_mch shp_mchName from  t_mall_sku s,t_mall_product p where s.shp_id=p.id
+</select>
+
+    <delete id="delMall_Sku">
+        delete from t_mall_sku  where id=#{id}
+    </delete>
+</mapper>
