@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.AttrMapper">
+    <select id="queryAttr" resultType="com.jk.pojo.MallAttr">
+
+     select * from t_mall_attr ma
+     <where>
+       <if test="queryid!=null">
+           ma.flbh2=#{queryid}
+       </if>
+
+     </where>
+    </select>
+
+    <select id="AttrByIdgetAttrValueName" resultType="com.jk.pojo.Attr_value">
+
+     select mv.shxzh,mv.shxzh_mch from t_mall_value mv where mv.shxm_id=#{id}
+    </select>
+
+    <select id="querymax" resultType="int">
+     select MAX(id) from t_mall_attr
+    </select>
+
+    <insert id="addMallAttr">
+    insert into t_mall_attr(shxm_mch,shfqy,flbh2) VALUES (#{shxm},1,#{pid})
+    </insert>
+
+    <!--void addAttr_value(QueryParam queryParam, @Param("querymax") int querymax);-->
+    <insert id="addAttr_value">
+    insert into t_mall_value(shxzh,shfqy,shxm_id,shxzh_mch) VALUES (#{attr_value.shxzh},1,#{querymax},#{attr_value.shxzh_mch})
+    </insert>
+
+
+
+
+</mapper>
