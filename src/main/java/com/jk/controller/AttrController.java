@@ -36,6 +36,7 @@ public class AttrController {
     public String tospsxgl_add(String queryid, Model model) {
         model.addAttribute("queryid",queryid);
         System.out.println("aaaa");//测试
+        System.out.println("aaaa111");//测试
         return "spsxgl_add";
     }
 
