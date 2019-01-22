@@ -36,6 +36,8 @@ public class AttrController {
     }
 
 
+
+
     @RequestMapping("adds")
     public String adds(QueryParam queryParam) {
         attrService.adds(queryParam);
