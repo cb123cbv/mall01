@@ -19,6 +19,7 @@ public class AttrController {
     private AttrService attrService;
 
 
+
     @ResponseBody
     @RequestMapping("queryAttr")
     public List<MallAttr> queryAttr(MallAttr mallAttr) {
