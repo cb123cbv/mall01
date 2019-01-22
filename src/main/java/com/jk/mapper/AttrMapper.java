@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface AttrMapper {
 
+
     List<MallAttr> queryAttr(MallAttr mallAttr);
 
     List<Attr_value>  AttrByIdgetAttrValueName(Integer id);

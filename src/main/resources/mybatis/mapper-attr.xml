@@ -17,6 +17,7 @@
      select mv.shxzh,mv.shxzh_mch from t_mall_value mv where mv.shxm_id=#{id}
     </select>
 
+
     <select id="querymax" resultType="int">
      select MAX(id) from t_mall_attr
     </select>
