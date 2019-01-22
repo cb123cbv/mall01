@@ -29,6 +29,8 @@ public class AttrController {
     }
 
 
+
+
     @RequestMapping("tospsxgl_add")
     public String tospsxgl_add(String queryid, Model model) {
         model.addAttribute("queryid",queryid);
