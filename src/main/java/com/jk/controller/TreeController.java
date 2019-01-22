@@ -30,6 +30,10 @@ public class TreeController {
  @ResponseBody
  @RequestMapping("getTree")
  public List<Tree> getTree(){
+
+  System.out.println("gjakfdshg");
   return treeService.getTree();
+
+
  }
 }
