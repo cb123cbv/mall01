@@ -2,9 +2,7 @@ package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.jk.mapper.Mall_SkuMapper;
-import com.jk.pojo.Mall_Sku;
-import com.jk.pojo.Mall_attr;
-import com.jk.pojo.Product;
+import com.jk.pojo.*;
 import com.jk.service.Mall_SkuService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
@@ -55,7 +53,19 @@ public class Mall_SkuServcieImpl implements Mall_SkuService {
     }
 
     @Override
-    public void addSku(Mall_Sku m) {
-        mapper.addSku(m);
+    public void addSku(MySbx m) {
+     mapper.addSku(m);
+     m.setId(m.getId());
+     List<Mall_sku_attr_value> list = m.getMallSkuAttrValue();
+     for (Mall_sku_attr_value value : list) {
+      value.setSku_id(m.getId());
+      value.setShp_id(m.getShp_id());
+      mapper.addMallSkuAttrValue(value);
+     }
     }
+
+ @Override
+ public List<Attr_value> getShu(Attr_value a) {
+  return mapper.getShu(a.getShxm_id());
+ }
 }

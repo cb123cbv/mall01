@@ -1,9 +1,7 @@
 package com.jk.controller;
 
 
-import com.jk.pojo.Mall_Sku;
-import com.jk.pojo.Mall_attr;
-import com.jk.pojo.Product;
+import com.jk.pojo.*;
 import com.jk.service.Mall_SkuService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
@@ -57,9 +55,15 @@ public class Mall_SkuController {
     }
     @ResponseBody
     @RequestMapping("addSku")
-    public String addSku(Mall_Sku m){
-        mall_skuService.addSku(m);
+    public String addSku(MySbx my){
+        mall_skuService.addSku(my);
         return null;
+    }
+    @ResponseBody
+    @RequestMapping("getShu")
+    public List<Attr_value> getShu(Attr_value a){
+        List<Attr_value> list=  mall_skuService.getShu(a);
+        return list;
     }
 
 }

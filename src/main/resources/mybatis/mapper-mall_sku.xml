@@ -18,5 +18,14 @@
     </select>
     <insert id="addSku">
         insert into t_mall_sku(shp_id,kc,jg,sku_mch,kcdz,sku_xl) value(#{shp_id},#{kc},#{jg},#{sku_mch},#{kcdz},#{sku_xl})
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+    <select id="getShu" resultType="com.jk.pojo.Attr_value">
+        select * from t_mall_value where shxm_id=#{id}
+    </select>
+    <insert id="addMallSkuAttrValue">
+        insert into t_mall_sku_attr_value(shxm_id,shxzh_id,shp_id,is_sku,sku_id) value(#{shxm_id},#{shxzh_id},#{shp_id},1,#{sku_id})
     </insert>
 </mapper>
