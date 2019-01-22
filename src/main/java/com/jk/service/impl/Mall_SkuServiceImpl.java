@@ -7,7 +7,7 @@ package com.jk.service.impl;/**
 
 import com.jk.mapper.Mall_SkuMapper;
 import com.jk.pojo.Mall_attr;
-import com.jk.pojo.Mall_sku;
+import com.jk.pojo.Mall_Sku;
 import com.jk.pojo.Product;
 import com.jk.service.Mall_SkuService;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class Mall_SkuServiceImpl implements Mall_SkuService {
  }
 
  @Override
- public void addSku(Mall_sku m) {
+ public void addSku(Mall_Sku m) {
   mall_skuMapper.addSku(m);
  }
 }

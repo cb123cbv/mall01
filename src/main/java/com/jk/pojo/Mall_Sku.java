@@ -13,7 +13,7 @@ import lombok.Data;
  * &lt;/pre&gt;    
  */
 @Data
-public class Mall_sku {
+public class Mall_Sku {
  private  Integer id;
  private  Integer shp_id;
  private  Integer kc;
