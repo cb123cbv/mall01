@@ -31,12 +31,12 @@ public class AttrController {
 
 
 
-    //测试注解
+
     @RequestMapping("tospsxgl_add")
     public String tospsxgl_add(String queryid, Model model) {
         model.addAttribute("queryid",queryid);
-        System.out.println("aaaa");//测试
-        System.out.println("aaaa111");//测试
+
+        System.out.println("sssssssss");
         return "spsxgl_add";
     }
 
@@ -46,6 +46,7 @@ public class AttrController {
     @RequestMapping("adds")
     public String adds(QueryParam queryParam) {
         attrService.adds(queryParam);
+        System.out.println("sssssssss");
         return "spsxgl";
     }
 
