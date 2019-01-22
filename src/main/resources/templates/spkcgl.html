@@ -59,7 +59,7 @@ function datagridQuery(){
      //删除
 function delBooks(id) {
     $.ajax({
-        url:"/delMall_Sku",
+        url:"/",
         type:"POST",
         data:{id:id},
         success:function(pageUtil){
@@ -87,7 +87,7 @@ function delOne(id,bname){
 </script>
 <body>
 <div id="tb">
-    <a id="btn"  class="easyui-linkbutton" data-options="iconCls:'icon-save'">新增</a>
+    <a id="btn" href="/toView?url=addmall_sku" class="easyui-linkbutton" data-options="iconCls:'icon-add'" target="_blank">新增商品</a>
 </div>
 <table id="dg"></table>
 </body>

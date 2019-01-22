@@ -2,10 +2,12 @@ package com.jk.controller;
 
 
 import com.jk.pojo.Mall_Sku;
+import com.jk.pojo.Mall_attr;
+import com.jk.pojo.Product;
 import com.jk.service.Mall_SkuService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,23 @@ public class Mall_SkuController {
 
         mall_skuService.delMall_Sku(id);
         return  null;
+    }
+    @ResponseBody
+    @RequestMapping("getSp")
+    public List<Product> getSp(Integer id){
+        List<Product> list=mall_skuService.getSp(id);
+        return list;
+    }
+    @ResponseBody
+    @RequestMapping("getSh")
+    public List<Mall_attr> getSh(Integer id){
+        return mall_skuService.getSh(id);
+    }
+    @ResponseBody
+    @RequestMapping("addSku")
+    public String addSku(Mall_Sku m){
+        mall_skuService.addSku(m);
+        return null;
     }
 
 }

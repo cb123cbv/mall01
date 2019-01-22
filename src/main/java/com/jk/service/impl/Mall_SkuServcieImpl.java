@@ -3,6 +3,8 @@ package com.jk.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.jk.mapper.Mall_SkuMapper;
 import com.jk.pojo.Mall_Sku;
+import com.jk.pojo.Mall_attr;
+import com.jk.pojo.Product;
 import com.jk.service.Mall_SkuService;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
@@ -41,5 +43,19 @@ public class Mall_SkuServcieImpl implements Mall_SkuService {
         mapper.delMall_Sku(id);
         return  null;
 
+    }
+    @Override
+    public List<Product> getSp(Integer id) {
+        return mapper.getSp(id);
+    }
+
+    @Override
+    public List<Mall_attr> getSh(Integer id) {
+        return mapper.getSh(id);
+    }
+
+    @Override
+    public void addSku(Mall_Sku m) {
+        mapper.addSku(m);
     }
 }
