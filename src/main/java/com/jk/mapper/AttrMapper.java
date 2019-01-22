@@ -17,9 +17,8 @@ public interface AttrMapper {
 
     void addMallAttr(QueryParam queryParam);
 
-    int querymax();
 
-    void addAttr_value(@Param("attr_value")Attr_value attr_value, @Param("querymax") int querymax);
+    void addAttr_value(@Param("attr_value")Attr_value attr_value, @Param("id")Integer id);
 
 
     @Delete("delete from t_mall_attr where id in(${ids})")

@@ -34,10 +34,9 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public void adds(QueryParam queryParam) {
         attrMapper.addMallAttr(queryParam);
-        int querymax = attrMapper.querymax();
-        for (Attr_value attr_value : queryParam.getAttr_value()) {
+       for (Attr_value attr_value : queryParam.getAttr_value()) {
             if(attr_value.getShxzh()!=null){
-                attrMapper.addAttr_value(attr_value,querymax);
+                attrMapper.addAttr_value(attr_value,queryParam.getId());
             }
         }
 

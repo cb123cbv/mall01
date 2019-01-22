@@ -31,7 +31,7 @@ public class TreeController {
  @RequestMapping("getTree")
  public List<Tree> getTree(){
 
-  System.out.println("gjakfdshg");
+
   return treeService.getTree();
 
 

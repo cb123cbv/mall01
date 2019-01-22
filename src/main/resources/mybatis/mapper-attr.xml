@@ -18,17 +18,19 @@
     </select>
 
 
-    <select id="querymax" resultType="int">
-     select MAX(id) from t_mall_attr
-    </select>
+
 
     <insert id="addMallAttr">
-    insert into t_mall_attr(shxm_mch,shfqy,flbh2) VALUES (#{shxm},1,#{pid})
+        insert into t_mall_attr(shxm_mch,shfqy,flbh2) VALUES (#{shxm},1,#{pid})
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
     </insert>
 
     <!--void addAttr_value(QueryParam queryParam, @Param("querymax") int querymax);-->
     <insert id="addAttr_value">
-    insert into t_mall_value(shxzh,shfqy,shxm_id,shxzh_mch) VALUES (#{attr_value.shxzh},1,#{querymax},#{attr_value.shxzh_mch})
+    insert into t_mall_value(shxzh,shfqy,shxm_id,shxzh_mch) VALUES (#{attr_value.shxzh},1,#{id},#{attr_value.shxzh_mch})
     </insert>
 
 

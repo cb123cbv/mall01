@@ -1,32 +1,38 @@
-package com.jk.pojo;/**
- * &lt;pre&gt;(这里用一句话描述这个方法的作用)
- *
- * @Author：陈斌 创建时间：
- * &lt;/pre&gt;
- */
+package com.jk.pojo;
 
 import lombok.Data;
 
-/** &lt;pre&gt;(这里用一句话描述这个方法的作用)
- * @Author：陈斌
- * 创建时间：     
- * &lt;/pre&gt;    
- */
+
 @Data
 public class Product {
- private Integer id;
 
- private String shp_mch;
+    private Integer id;//编号
 
- private String shp_tp;
+    private String shp_mch;//商品名称
 
- private Integer flbh1;
+    private String shp_tp;//商品图片
 
- private Integer flbh2;
+    private Integer flbh1;//分类编号1
 
- private String pp_id;
+    private Integer flbh2;//分类编号2
 
- private String chjshj;
+    private Integer pp_id;//品牌id
 
- private String shp_msh;
+    private String chjshj;//创建时间
+
+    private String shp_msh;//商品描述
+
+    private String flmch1;
+
+    private String flmch2;
+
+    private String ppmch;
+
+
+    //------------临时字段
+    private String picOne;
+    private String picTwo;
+    private String picThree;
+
+
 }

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css">
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css">
+    <script src="/js/uploadify/jquery.uploadify.js"></script>
+    <link rel="stylesheet" href="/js/uploadify/uploadify.css">
+
+
+    <script type="text/javascript">
+        $(function () {
+            yjfl();
+            preFile();
+            preFile2();
+
+        })
+
+        //一级分类
+        function yjfl() {
+            $('#class01').combobox({
+                url: '/js/json/class_1.js',
+                method: 'get',
+                valueField: 'id',
+                textField: 'flmch1',
+                onSelect: function (timp) {
+                    ejfl(timp.id)
+                    pp(timp.id);
+                }
+            })
+        }
+
+        //二级分类
+        function ejfl(id) {
+
+            $('#class02').combobox({
+                url: '/js/json/class_2_' + id + '.js',
+                method: 'get',
+                valueField: 'id',
+                textField: 'flmch2'
+            })
+        }
+
+        //品牌
+        function pp(id) {
+            $('#class03').combobox({
+                url: '/js/json/tm_class_1_' + id + '.js',
+                method: 'get',
+                valueField: 'id',
+                textField: 'ppmch',
+                onSelect: function () {
+
+                }
+            })
+        }
+
+        //图片控件
+        function preFile() {
+//上传插件
+            $("#uploadify").uploadify({
+                //插件自带  不可忽略的参数
+                'swf': '/js/uploadify/uploadify.swf',
+                //前台请求后台的url 不可忽略的参数                //*****要修改路经 !!!!!!!!!
+                'uploader': '/pro/upload.do',
+                //给div的进度条加背景 不可忽略
+                'queueID': 'fileQueue',
+                //上传文件文件名 !!!!!!!与后台接口参数名字需要完全一致!!!!!!!!
+                'fileObjName': 'file',
+                //给上传按钮设置文字
+                'buttonText': '上传图片',
+                //设置文件是否自动上传
+                'auto': true,
+                //可以同时选择多个文件 默认为true  不可忽略
+                'multi': false,
+                //上传后队列是否消失
+                'removeCompleted': true,
+                //队列消失时间
+                'removeTimeout': 1,
+                //上传文件的个数，项目中一共可以上传文件的个数
+                'uploadLimit': -1,
+                'onFallback': function () {
+                    alert("浏览器不支持,请更换其他浏览器,或打开Flash插件");
+                },
+                //上传失败
+                'onUploadError': function () {
+                    alert("上传失败");
+                },
+                //成功回调函数 file：文件对象。data后台输出数据
+                'onUploadSuccess': function (file, data, response) {
+                    var imgurl = "/upload/" + data;
+                    //给img框赋值进行展示
+                    $("#testimg").attr("src", imgurl);
+                    //给隐藏的文本框赋值 传到后台
+                    $('#hideImg').val(data);
+                }
+            });
+        }
+
+        function addProduct() { //使普通表单成为ajax提交方式的表单。
+            $.ajax({
+                url: "/pro/addProduct.do",
+                type: "POST",
+                data: $("#shopId").serialize(),
+                success: function (data) {
+                    alert("成功")
+                },
+                error: function () {
+                    alert("失败了");
+                }
+            });
+        }
+
+        function removeDiv() {
+
+            $("#div2").html('<input type="button" onclick="adduploadify()" value="添加图片">')
+            num=1;
+        }
+
+        function adduploadify() {
+
+            var count = "";
+            count += '<input name="picOne" id="picSrc1" type="hidden">';
+            count += '<input name="picTwo" id="picSrc2" type="hidden">';
+            count += '<input name="picThree" id="picSrc3" type="hidden">';
+            count += '截图介绍(最多三张):';
+            count += '<input id="uploadify2" type="file">';
+            count += '<div id="fileQueue2"></div>';
+            count += '<img width="50" id="pic1">';
+            count += '<img width="50" id="pic2">';
+            count += '<img width="50" id="pic3">';
+            count += '<input type="button" onclick="removeDiv()" value="取消添加图片">';
+            $("#div2").html(count);
+            preFile2();
+
+        }
+
+
+        //图片控件
+        var num = 1;
+        function preFile2() {
+//上传插件
+            $("#uploadify2").uploadify({
+                //插件自带  不可忽略的参数
+                'swf': '/js/uploadify/uploadify.swf',
+                //前台请求后台的url 不可忽略的参数                //*****要修改路经 !!!!!!!!!
+                'uploader': '/pro/upload.do',
+                //给div的进度条加背景 不可忽略
+                'queueID': 'fileQueue2',
+                //上传文件文件名 !!!!!!!与后台接口参数名字需要完全一致!!!!!!!!
+                'fileObjName': 'file',
+                //给上传按钮设置文字
+                'buttonText': '上传图片',
+                //设置文件是否自动上传
+                'auto': true,
+                //可以同时选择多个文件 默认为true  不可忽略
+                'multi': true,
+                //上传后队列是否消失
+                'removeCompleted': true,
+                //队列消失时间
+                'removeTimeout': 1,
+                //上传文件的个数，项目中一共可以上传文件的个数
+                'uploadLimit': 3,
+                'onFallback': function () {
+                    alert("浏览器不支持,请更换其他浏览器,或打开Flash插件");
+                },
+                //上传失败
+                'onUploadError': function () {
+                    alert("上传失败");
+                },
+                //成功回调函数 file：文件对象。data后台输出数据
+                'onUploadSuccess': function (file, data, response) {
+                    if (num == 1) {
+                        num++;
+                        $("#pic1").prop("src", "/upload/" + data);
+                        $("#picSrc1").val(data);
+                    } else if (num == 2) {
+                        num++;
+                        $("#pic2").prop("src", "/upload/" + data);
+                        $("#picSrc2").val(data);
+                    } else if (num == 3) {
+                        num++;
+                        $("#pic3").prop("src", "/upload/" + data);
+                        $("#picSrc3").val(data);
+                    }
+                }
+            });
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+<form id="shopId">
+    一级分类：<input id="class01" name="flbh1" class="easyui-combobox">
+    二级分类：<input id="class02" name="flbh2" class="easyui-combobox">
+    品牌：<input id="class03" name="pp_id" class="easyui-combobox">
+    <hr>
+    商品名称:<input id="name" name="shp_mch" class="easyui-text">
+    <hr>
+    商品描述: <textarea name="shp_msh">
+
+          </textarea><br/>
+
+    商品图片:
+    <input name="shp_tp" id="hideImg" type="hidden">
+    <input id="uploadify" type="file">
+    <div id="fileQueue"></div>
+    <img id="testimg" width="66">
+    <!-- 上传完显示的图片  -->
+
+
+    <!-- 第二个图片上传  -->
+    <div id="div2">
+        <input type="button" onclick="adduploadify()" value="添加图片">
+    </div>
+
+</form>
+<input type="button" value="提交" onclick="addProduct()">
+</body>
+</html>
