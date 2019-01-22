@@ -16,6 +16,7 @@
             yjfl();
             preFile();
 
+
         })
         //一级分类
         function yjfl() {
@@ -91,6 +92,7 @@
                 }
             });
         }
+
         function addProduct(){ //使普通表单成为ajax提交方式的表单。
             $.ajax({
                 url:"/pro/addProduct.do",
@@ -122,11 +124,19 @@
 
           </textarea><br/>
 
-商品图片:
+商品图片:<input id="uploadify" type="file">
     <input name="shp_tp" id="hideImg" type="text"> <img id="testimg" width="66">
     <!-- 上传完显示的图片  -->
     <div id="fileQueue"></div>
-    <input id="uploadify" type="file">
+
+
+截图介绍(最多三张):<input id="uploadFile2" type="file">
+    <img width="50" id="pic1">
+    <img width="50" id="pic2">
+    <img width="50" id="pic3">
+    <div id="imgDiv2"></div>
+    <br/>
+
 </form>
 <input type="button" value="提交" onclick="addProduct()">
 </body>

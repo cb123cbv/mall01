@@ -1,10 +1,13 @@
 package com.jk.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.jk.mapper.AttrMapper;
 import com.jk.pojo.Attr_value;
 import com.jk.pojo.MallAttr;
 import com.jk.pojo.QueryParam;
 import com.jk.service.AttrService;
+import com.jk.utils.ReceivePage;
+import com.jk.utils.SendPage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +19,11 @@ public class AttrServiceImpl implements AttrService {
     private AttrMapper attrMapper;
 
     @Override
-    public List<MallAttr> queryAttr(MallAttr mallAttr) {
+    public SendPage queryAttr(ReceivePage receivePage, MallAttr mallAttr) {
+
+        List<MallAttr> count = attrMapper.queryAttr(mallAttr);
+
+        PageHelper.startPage(receivePage.getPage(),receivePage.getRows());
         List<MallAttr> mallAttrs = attrMapper.queryAttr(mallAttr);
         for (MallAttr Attr : mallAttrs) {
             List<Attr_value> nameList = attrMapper.AttrByIdgetAttrValueName(Attr.getId());
@@ -27,8 +34,8 @@ public class AttrServiceImpl implements AttrService {
             }
             Attr.setShxz(flag);
         }
-
-        return mallAttrs;
+        SendPage sp= new SendPage(count.size(),mallAttrs);
+        return sp;
     }
 
     @Override
