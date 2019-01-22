@@ -12,146 +12,157 @@
 
     <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/js/easyui1.5/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            yjfl();
-            $("#a1").hide();
-            $("#a2").hide();
+    <script type="text/javascript" >
+     $(function(){
+         yjfl();
+         $("#a1").hide();
+         $("#a2").hide();
+     })
+     //一级分类
+    function yjfl() {
+        $('#class01').combobox({
+
+            url:'/js/json/class_1.js',
+            method:'get',
+            valueField:'id',
+            textField:'flmch1',
+            onSelect:function(timp){
+                ejfl(timp.id)
+                pp(timp.id);
+            }
         })
-
-        //一级分类
-        function yjfl() {
-            $('#class01').combobox({
-                url: '/json/class_1.js',
-                method: 'get',
-                valueField: 'id',
-                textField: 'flmch1',
-                onSelect: function (timp) {
-                    ejfl(timp.id)
-                    pp(timp.id);
-                }
-            })
-        }
-
-        //二级分类
-        var aa = null;
-        var bb = null;
-
-        function ejfl(id) {
-            $('#class02').combobox({
-                url: '/json/class_2_' + id + '.js',
-                method: 'get',
-                valueField: 'id',
-                textField: 'flmch2',
-                onSelect: function (timp) {
-                    aa = timp.id;
-                    bb = id;
-                    getSh(timp.id);
-                }
-            })
-        }
-
-        //品牌
-        function pp(id) {
-            $('#class03').combobox({
-                url: '/json/tm_class_1_' + id + '.js',
-                method: 'get',
-                valueField: 'id',
-                textField: 'ppmch',
-                onSelect: function (timp) {
-                    //alert(timp.id)
-                    getSp(timp.id);
-                }
-            })
-        }
-
-        //查询商品
-        function getSp(id) {
-            $.ajax({
-                url: '/getSp?id=' + id,
-                type: "POST",
-                success: function (result) {
-                    var option = "";
-                    $.each(result, function (index, obj) {
-                        option += "<option value='" + obj.id + "'>" + obj.shp_mch + "</option>"
+    }
+     //二级分类
+     var aa=null;
+     var bb=null;
+    function ejfl(id) {
+     $('#class02').combobox({
+            url:'/js/json/class_2_'+id+'.js',
+            method:'get',
+            valueField:'id',
+            textField:'flmch2',
+         onSelect:function(timp){
+                aa=timp.id;
+                bb=id;
+              getSh(timp.id);
+         }
+        })
+    }
+    //品牌
+    function pp(id) {
+     $('#class03').combobox({
+            url:'/js/json/tm_class_1_'+id+'.js',
+            method:'get',
+            valueField:'id',
+            textField:'ppmch',
+            onSelect:function(timp){
+               //alert(timp.id)
+                getSp(timp.id);
+         }
+        })
+    }
+    //查询商品
+    function getSp(id) {
+        $.ajax({
+        		url:'/getSp?id='+id,
+        		type:"POST",
+        		success:function(result){
+        		    var option="";
+                    $.each(result,function(index,obj){
+                        option+="<option value='"+obj.id+"'>"+obj.shp_mch+"</option>"
                     })
                     $("[name='shp_id']").html(option);
-                },
-                error: function () {
-                    alert("失败了");
-                }
-            })
+        		},
+        		error:function(){
+        			alert("失败了");
+        		}
+        		})
 
-        }
-
-        //查询属性
-        function getSh(id) {
+    }
+    //查询属性
+     function getSh(id){
+      $.ajax({
+      		url:"/getSh?id="+id,
+      		type:"POST",
+      		success:function(result){
+      		    var a="";
+      		   	$.each(result,function(index,obj){
+      		   	    console.log(obj)
+      		   	    a+='<input value="'+obj.id+'" type="checkbox" name="mallSkuAttrValue['+index+'].shxm_id"  onclick="gb(this)">'+obj.shxm_mch
+                })
+                $("#c1").html(a);
+      		},
+      		error:function(){
+      			alert("失败了");
+      		}
+      		})
+     }
+     var a=-1;
+    function gb(check) {
+        //alert(id)
+        a++;
+        var str=check.checked;
+        var id=$(check).val();
+        if(str) {
             $.ajax({
-                url: "/getSh?id=" + id,
+                url: "/getShu?shxm_id=" + id,
                 type: "POST",
                 success: function (result) {
-                    var a = "";
+                   //console.log(result)
+                    var count2="";
+                    count2 += "<div id='sxmid_" + check.value + "'>"
                     $.each(result, function (index, obj) {
-                        a += '<input value="' + obj.id + '" type="checkbox" name="aaa"  onclick="gb()">' + obj.shxm_mch
+                        count2 += "<input type='radio' name='mallSkuAttrValue["+a+"].shxzh_id' value=" + obj.id + ">" + obj.shxzh+obj.shxzh_mch ;
                     })
-                    $("#c1").html(a);
+                    count2 += "</div>"
+                    $("#aaa").append(count2)
                 },
                 error: function () {
                     alert("失败了");
                 }
             })
+        }else{
+            $("#sxmid_"+check.value).remove();
         }
-
-        function gb() {
-            var str = $("[name='aaa']:checked");
-            console.log(str)
-            $.each(str, function (index, obj) {
-                console.log(obj.value)
-            })
-
-        }
-
-        function addSku() {
-            $.ajax({
-                url: "/addSku",
-                type: "POST",
-                data: $("form").serialize(),
-                success: function (result) {
-                    location.reload();
-                },
-                error: function () {
-                    alert("失败了");
-                }
-            })
-        }
+    }
+     function addSku(){
+        $.ajax({
+        		url:"/addSku",
+        		type:"POST",
+        		data:$("form").serialize(),
+        		success:function(result){
+        		   	location.reload();
+        		},
+        		error:function(){
+        			alert("失败了");
+        		}
+        		})
+     }
     </script>
+
+
 
 </head>
 <body>
-<form>
-    一级分类：<input id="class01" name="" value="请选择" class="easyui-combobox">
-    二级分类：<input id="class02" name="" value="请选择" class="easyui-combobox">
-    品牌：<input id="class03" name="" value="请选择" class="easyui-combobox">
-    商品列表：<select name="shp_id"></select>
-    <hr>
-    属性列表页：<br>
-    <div id="c1"></div>
-    <hr>
-    <div id="a1">
-        <input type="radio" name=""> 900*900像素
-        <input type="radio" name=""> 1000*780像素
-    </div>
-    <div id="a2">
-        <input type="radio" name=""> 16寸
-        <input type="radio" name=""> 20寸
-    </div>
-    <hr>
-    商品库存名称：<input class="easyui-textbox" name="sku_mch"><br>
-    商品库存数量：<input class="easyui-textbox" name="kc"><br>
-    商品库存价格：<input class="easyui-textbox" name="jg"><br>
-    商品库存销量：<input class="easyui-textbox" name="sku_xl"><br>
-    商品库存地址：<input class="easyui-textbox" name="kcdz"><br>
-</form>
-<a id="btn" onclick="addSku()" class="easyui-linkbutton">保存</a>
+ <form>
+ 一级分类：<input id="class01" name="" value="请选择" class="easyui-combobox">
+ 二级分类：<input id="class02" name="" value="请选择" class="easyui-combobox">
+     品牌：<input id="class03" name="" value="请选择" class="easyui-combobox">
+ 商品列表：<select name="shp_id"></select>
+<hr>
+属性列表页：<br>
+     <div id="c1"></div>
+ <hr>
+<div id="aaa" >
+
+</div>
+<hr>
+ 商品库存名称：<input class="easyui-textbox" name="sku_mch"><br>
+ 商品库存数量：<input class="easyui-textbox" name="kc"><br>
+ 商品库存价格：<input class="easyui-textbox" name="jg"><br>
+ 商品库存销量：<input class="easyui-textbox" name="sku_xl"><br>
+ 商品库存地址：<input class="easyui-textbox" name="kcdz"><br>
+ </form>
+ <a id="btn" onclick="addSku()" class="easyui-linkbutton">保存</a>
 </body>
 </html>

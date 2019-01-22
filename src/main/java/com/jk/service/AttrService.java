@@ -2,12 +2,12 @@ package com.jk.service;
 
 import com.jk.pojo.MallAttr;
 import com.jk.pojo.QueryParam;
-
-import java.util.List;
+import com.jk.utils.ReceivePage;
+import com.jk.utils.SendPage;
 
 public interface AttrService {
 
-    List<MallAttr> queryAttr(MallAttr mallAttr);
+    SendPage queryAttr(ReceivePage receivePage, MallAttr mallAttr);
 
     void adds(QueryParam queryParam);
 

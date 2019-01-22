@@ -1,8 +1,6 @@
 package com.jk.service;
 
-import com.jk.pojo.Mall_Sku;
-import com.jk.pojo.Mall_attr;
-import com.jk.pojo.Product;
+import com.jk.pojo.*;
 import com.jk.utils.ReceivePage;
 import com.jk.utils.SendPage;
 
@@ -17,5 +15,7 @@ public interface Mall_SkuService {
 
     List<Mall_attr> getSh(Integer id);
 
-    void addSku(Mall_Sku m);
+    void addSku(MySbx m);
+
+ List<Attr_value> getShu(Attr_value a);
 }

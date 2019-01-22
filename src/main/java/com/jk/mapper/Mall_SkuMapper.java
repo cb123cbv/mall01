@@ -1,8 +1,6 @@
 package com.jk.mapper;
 
-import com.jk.pojo.Mall_Sku;
-import com.jk.pojo.Mall_attr;
-import com.jk.pojo.Product;
+import com.jk.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,5 +14,9 @@ public interface Mall_SkuMapper {
 
     List<Mall_attr> getSh(Integer id);
 
-    void addSku(Mall_Sku m);
+    void addSku(MySbx m);
+
+  List<Attr_value> getShu(Integer shxm_id);
+
+    void addMallSkuAttrValue(Mall_sku_attr_value m);
 }
