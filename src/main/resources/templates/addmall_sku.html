@@ -87,7 +87,8 @@
       		success:function(result){
       		    var a="";
       		   	$.each(result,function(index,obj){
-      		   	    a+='<input value="'+obj.id+'" type="checkbox" name="aaa"  onclick="gb()">'+obj.shxm_mch
+      		   	    console.log(obj)
+      		   	    a+='<input value="'+obj.id+'" type="checkbox" name="mallSkuAttrValue['+index+'].shxm_id"  onclick="gb(this)">'+obj.shxm_mch
                 })
                 $("#c1").html(a);
       		},
@@ -96,13 +97,33 @@
       		}
       		})
      }
-    function gb() {
-        var str=$("[name='aaa']:checked");
-        console.log(str)
-        $.each(str,function(index,obj){
-            console.log(obj.value)
-        })
-
+     var a=-1;
+    function gb(check) {
+        //alert(id)
+        a++;
+        var str=check.checked;
+        var id=$(check).val();
+        if(str) {
+            $.ajax({
+                url: "/getShu?shxm_id=" + id,
+                type: "POST",
+                success: function (result) {
+                   //console.log(result)
+                    var count2="";
+                    count2 += "<div id='sxmid_" + check.value + "'>"
+                    $.each(result, function (index, obj) {
+                        count2 += "<input type='radio' name='mallSkuAttrValue["+a+"].shxzh_id' value=" + obj.id + ">" + obj.shxzh+obj.shxzh_mch ;
+                    })
+                    count2 += "</div>"
+                    $("#aaa").append(count2)
+                },
+                error: function () {
+                    alert("失败了");
+                }
+            })
+        }else{
+            $("#sxmid_"+check.value).remove();
+        }
     }
      function addSku(){
         $.ajax({
@@ -132,13 +153,8 @@
 属性列表页：<br>
      <div id="c1"></div>
  <hr>
-<div id="a1" >
-    <input type="radio" name=""> 900*900像素
-    <input type="radio" name=""> 1000*780像素
-</div>
- <div id="a2">
-    <input type="radio" name=""> 16寸
-    <input type="radio" name=""> 20寸
+<div id="aaa" >
+
 </div>
 <hr>
  商品库存名称：<input class="easyui-textbox" name="sku_mch"><br>
