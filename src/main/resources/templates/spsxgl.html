@@ -1,10 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--jquery-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+
+    <!--引入easyui的样式 -->
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css"></link>
+    <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/easyui1.5/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" th:inline="none">
+        $(function () {
+
+            queryAttr();
+            startDatagried();
+        })
+        var flag = null;
+
+        function queryAttr() {
+            $('#class1').combobox({
+                url: '/js/json/class_1.js',
+                method: 'get',
+                valueField: 'id',
+                textField: 'flmch1',
+                onSelect: function (item) {
+                    //console.log(item)
+                    $('#class2').combobox({
+                        url: '/js/json/class_2_' + item.id + '.js',
+                        method: 'get',
+                        valueField: 'id',
+                        textField: 'flmch2',
+                        onSelect: function (item) {
+                            flag = item.id;
+
+
+                        }
+
+                    });
+                }
+            });
+        }
+
+        function startDatagried() {
+            $('#dg').datagrid({
+                url: '/attr/queryAttr',
+                //pagination:true, //开启分页工具栏
+                striped: true, //斑马线效果
+                toolbar: '#tbtn',
+                checkOnSelect: false, //false，当用户仅在点击该复选框的时候才会呗选中或取消
+                //pageList:[1,3,6,12],//下拉框条数
+                pageSize: 3, //默认显示多少条 这个值一定在pagelist中存在
+                columns: [[
+                    {field: 'aaa', title: 'bbb', width: 50, checkbox: true}, //全选反选
+                    {field: 'id', title: '编号', width: 50, align: 'center'},
+                    {field: 'shxm_mch', title: '属性名', width: 100, align: 'center'},
+                    {
+                        field: 'shfqy', title: '是否启用', width: 100, align: 'center',
+                        formatter: function (value, row, index) {
+                            if (value == 1) {
+                                return "启用";//1
+                            } else {
+                                return "不启用";//2
+                            }
+                        }
+                    },
+
+                    {field: 'shxz', title: '属性值', width: 300, align: 'center'},
+
+                    {
+                        field: '`', title: '操作', width: 200, align: 'center',
+                        formatter: function (value, row, index) {
+                            var temp = "<a href='javascript:void(0)' onclick='deletes(" + row.id + ")'>删除</a>";
+                            return temp;
+                        }
+                    }
+                ]]
+            });
+        }
+
+
+        //--------------------条查--
+
+        function queryCondition() {
+            //加载数据  直接发送一个对象
+            $('#dg').datagrid('load', serializeFrom2Obj($("#query_form")));
+        }
+
+        //把表单转换为一个对象
+        function serializeFrom2Obj(obj) {
+            var o = {};
+            var a = obj.serializeArray();//[{name:'price',value='12'},{},{}]
+            $.each(a, function () {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        }
+
+        function toAddAttr() {
+            if (flag != null || flag != "") {
+                location.href = 'attr/tospsxgl_add?queryid=' + flag;
+
+            } else {
+
+                alert("请选择给谁增加");
+            }
+        }
+
+
+        function deleteDemo() {
+            var rows = $("#dg").datagrid('getChecked');
+            var ids = '';
+            $.each(rows, function (index, obj) {
+                ids += ids == '' ? obj.id : "," + obj.id;
+            });
+            deletes(ids);
+        }
+
+        function deletes(ids) {
+
+            $.ajax({
+                url: "attr/deletes.do",
+                type: "POST",
+                data: {ids: ids},
+                success: function (result) {
+                    //数据库已经删除成功 页面需要更新
+                    $("#dg").datagrid('load');//reload 会重新请求数据 但会停留在当前页
+                                                   //load 会跑到第一页
+                    $.messager.show({
+                        title: '消息',
+                        msg: '删除成功!!',
+                        timeout: 1000,//提示框出来的时间
+                        showType: 'slide'
+                    });
+                },
+                error: function () {
+                    alert("ajax访问失败了,查看控制台");
+                }
+            });
+        }
+
+
+
+
+
+
+    </script>
+
+
 </head>
+
 <body>
-商品属性管理
+<div id="tbtn">
+    <!-- 条查 -->
+    <form id="query_form">
+        商品属性管理
+        <input id="class1">
+        <input id="class2" name="queryid">
+    </form>
+    <a id="ss_btn" href="javascript:void(0)" class="easyui-linkbutton" onClick="deleteDemo()"
+       data-options="iconCls:'icon-search'">批量删除</a>
+    <a id="ss_btn" href="javascript:void(0)" class="easyui-linkbutton" onClick="queryCondition()"
+       data-options="iconCls:'icon-search'">点击搜索</a>
+    <br>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onClick="toAddAttr()"
+       data-options="iconCls:'icon-add'">添加</a>
+
+</div>
+
+
+<!--列表展示信息 -->
+<table id="dg" fit=true></table>
+<br>
 </body>
 </html>

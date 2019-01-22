@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+
+
+        var i = 1;
+
+        function addLine() {
+
+            var content = "";
+            content += "<tr>";
+            content += "<td>属性值:<input name='attr_value[" + i + "].shxzh'></td>";
+            content += "<td>单位:<input name='attr_value[" + i + "].shxzh_mch'></td>";
+            content +="	<td><input type='button' onclick='delRow(this)' value='删除'/></td>";
+            content += "</tr>";
+
+            i++;
+
+            $("#tableId").append(content);
+        }
+
+        function delRow(obj){
+            //获取当前对象的父元素，在其下寻找id为“id”的元素的值
+            var id1=$(obj).parents("tr").find("#id").val();
+            var res=confirm("确定要删除么？");
+            if(res){
+                //删除界面元素，当前行
+                $(obj).parents("tr").remove();
+            }
+            //若有id就表示该数据是界面原本就有的，需要删除数据库数据
+            //若无id表示为界面动态添加的，删除时只需要删除界面元素
+            if(id1!=null){
+                //ajax删除数据
+                $.ajax({
+                    url : "suggestpage_delTeam.do",
+                    data : {"id":id1},
+                    type : "POST",
+                    success : function(data) {
+                        if (data == "true") {
+                            alert("删除成功");
+                        } else {
+                            alert(data);
+                        }
+                    }
+                });
+            }
+        }
+
+
+
+    </script>
+
+</head>
+<body>
+添加属性页<br>
+<form action="/attr/adds" method="post">
+
+    <!--第一个-->
+    <table border="2" id="tableId">
+        <tr align="center">
+            <td>属性名:<input name="shxm" id="shxm"><input type="hidden" name="pid" th:value="${queryid}"></td>
+            <td></td>
+            <td><a href='javascript:void(0)' onclick="addLine()">添加值</a></td>
+        </tr>
+        <tr align="center">
+            <td>属性值:<input name="attr_value[0].shxzh"></td>
+            <td>单位:<input name="attr_value[0].shxzh_mch">
+
+            </td>
+            <td><input type="button" onclick="delRow(this)" value="删除"/></td>
+        </tr>
+
+    </table>
+
+    <input type="submit">
+
+
+</form>
+</body>
+</html>

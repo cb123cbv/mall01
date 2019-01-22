@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.Mall_SkuMapper">
+    <select id="getSp" resultType="com.jk.pojo.Product">
+        select * from t_mall_product where pp_id=#{id}
+    </select>
+
+    <select id="getSh" resultType="com.jk.pojo.Mall_attr">
+         select * from t_mall_attr where flbh2=#{id}
+    </select>
+    <insert id="addSku">
+        insert into t_mall_sku(shp_id,kc,jg,sku_mch,kcdz,sku_xl) value(#{shp_id},#{kc},#{jg},#{sku_mch},#{kcdz},#{sku_xl})
+    </insert>
+</mapper>
