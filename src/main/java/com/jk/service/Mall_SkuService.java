@@ -1,22 +1,21 @@
 package com.jk.service;
 
+import com.jk.pojo.Mall_Sku;
 import com.jk.pojo.Mall_attr;
-
-import com.jk.pojo.Mall_sku;
 import com.jk.pojo.Product;
+import com.jk.utils.ReceivePage;
+import com.jk.utils.SendPage;
 
 import java.util.List;
 
-/**
- * &lt;pre&gt;${enclosing_method}(这里用一句话描述这个方法的作用)
- *
- * @Author：陈斌 创建时间：${date} ${time}
- * ${tags}&lt;/pre&gt;
- */
 public interface Mall_SkuService {
- List<Product> getSp(Integer id);
+    SendPage getMall_Sku(ReceivePage receivePage, Mall_Sku mall_sku);
 
- List<Mall_attr> getSh(Integer id);
+    String delMall_Sku(String id);
 
- void addSku(Mall_sku m);
+    List<Product> getSp(Integer id);
+
+    List<Mall_attr> getSh(Integer id);
+
+    void addSku(Mall_Sku m);
 }
