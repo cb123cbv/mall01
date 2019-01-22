@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <!--引入easyui的样式 -->
+    <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css">
+    <link rel="stylesheet" href="/js/easyui1.5/themes/icon.css" type="text/css">
+    <script type="text/javascript" src="/js/easyui1.5/jquery.easyui.min.js"></script>
 </head>
 <body>
-商品信息管理
+<div id="toolbar">
+    <a href="pro/toaddpro.do">添加商品</a>
+</div>
+    <table id="myTable"></table>
 </body>
+<script type="text/javascript" th:inline="none">
+    //页面加载事件
+    $(function(){
+        initMyTable();
+    })
+    //显示数据
+    function initMyTable(){
+        $('#myTable').datagrid({
+            url:'/pro/getPageList',
+            fit:true,//适应窗口大小
+            pagination:true,//开启分页
+            pageNumber:1,//第几页
+            pageSize:3,//每页多少条
+            pageList:[1,2,3,4,5],//分页下拉框
+            loadMsg:'数据加载中...',
+            toolbar:'#toolbar',//这个东西是使分页的东西不被挤掉
+            checkOnSelect:false,//这个是在点击一行的时候不会选中前面的复选框
+            columns:[[
+                {field:'id',title:'ID',align:'center'},//checkbox:true开启复选框
+                {field:'shp_mch',title:'商品名称',align:'center'},
+                {field:'shp_tp',title:'商品图片',align:'center',formatter:function(value){
+                    return '<img width="100px" height="70px" src="/js/image/'+value+'"/>'
+                }},
+                {field:'flmch1',title:'分类编号1',align:'center'},
+                {field:'flmch2',title:'分类编号2',align:'center'},
+                {field:'ppmch',title:'品牌ID',align:'center'},
+                {field:'chjshj',title:'创建时间',align:'center'},
+                {field:'shp_msh',title:'商品描述',align:'center'}
+            ]]
+        })
+    }
+</script>
 </html>

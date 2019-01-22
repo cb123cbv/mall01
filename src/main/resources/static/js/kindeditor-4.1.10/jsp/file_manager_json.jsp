@@ -21,7 +21,7 @@ String[] fileTypes = new String[]{"gif", "jpg", "jpeg", "png", "bmp"};
 
 String dirName = request.getParameter("dir");
 if (dirName != null) {
-	if(!Arrays.<String>asList(new String[]{"image", "flash", "media", "file"}).contains(dirName)){
+	if(!Arrays.<String>asList(new String[]{"static/js/image", "flash", "media", "file"}).contains(dirName)){
 		out.println("Invalid Directory name.");
 		return;
 	}
