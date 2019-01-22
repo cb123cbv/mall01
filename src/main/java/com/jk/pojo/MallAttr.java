@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 public class MallAttr {
 
+
     private Integer Id;//(编号)            PKInteger
     private String shxm_mch;//(属性名称)  String(100)
     private String shfqy;//(是否启用)     String(1)
