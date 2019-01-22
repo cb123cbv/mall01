@@ -1,0 +1,31 @@
+bootbox.dialog({
+		size: "big",
+		title:'添加用户',
+		message:createAddContent("../boot/toAddUser.do"),
+		closeButton:true,
+		//className:'add-dialog',
+		buttons:{
+			'success':{
+				"label" : "<i class='icon-ok'></i> 保存",
+		    "className" : "btn-sm btn-success",
+		    "callback" : function() {
+			$.ajax({
+				url:'../user/saveUser.do',
+				type:'post',
+				data:$("#addForm").serialize(),
+				dataType:'json',
+				success:function(data){
+					$('#myTable').bootstrapTable('refresh');
+				}
+			})
+		    }
+			},
+			'cancel':{
+				 "label" : "<i class='icon-info'></i> 取消",
+			 "className" : "btn-sm btn-danger",
+			 "callback":function(){
+				 
+			 }
+			}
+		}
+	})

@@ -1,0 +1,32 @@
+2 pageSize
+
+pageNow    offset
+1  			0
+			
+2  			2
+			
+3  			4
+			
+4  			6
+
+offset = (pageNow-1)*pageSize 
+
+
+pageNow =   offset / pageSize + 1
+ 
+ 
+2 pageSize
+
+offset    pageNow
+0         1
+
+2         2
+
+4		 3
+
+6		4
+
+
+bootbox  https://blog.csdn.net/kiwi4814/article/details/54730109/
+table    https://blog.csdn.net/s_clifftop/article/details/77937356?skintest=skin3-template-test
+ 
