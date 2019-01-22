@@ -37,7 +37,7 @@ public class AttrController {
         model.addAttribute("queryid",queryid);
         System.out.println("aaaaaaa");
         
-        
+         System.out.println("ffff");
         System.out.println("sssssssss");
         return "spsxgl_add";
     }
