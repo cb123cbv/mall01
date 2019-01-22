@@ -31,10 +31,11 @@ public class AttrController {
 
 
 
-
+    //测试注解
     @RequestMapping("tospsxgl_add")
     public String tospsxgl_add(String queryid, Model model) {
         model.addAttribute("queryid",queryid);
+        System.out.println("aaaa");//测试
         return "spsxgl_add";
     }
 
