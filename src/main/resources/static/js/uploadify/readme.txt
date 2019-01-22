@@ -35,9 +35,6 @@ $("#uploadify").uploadify({
     	//$.messager.alert('提示','上传失败');
     	alert("上传失败");
     },
-
-    //不支持flash时调用
-    'onFallback':function(){alert('不支持flash')},
 	//成功回调函数 file：文件对象。data后台输出数据
     'onUploadSuccess':function(file,data,response){
     	//$.messager.progress('close');
