@@ -23,7 +23,7 @@ String saveUrl  = request.getContextPath() + "/attached/";
 
 //定义允许上传的文件扩展名
 HashMap<String, String> extMap = new HashMap<String, String>();
-extMap.put("image", "gif,jpg,jpeg,png,bmp");
+extMap.put("static/js/image", "gif,jpg,jpeg,png,bmp");
 extMap.put("flash", "swf,flv");
 extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
 extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
@@ -52,7 +52,7 @@ if(!uploadDir.canWrite()){
 
 String dirName = request.getParameter("dir");
 if (dirName == null) {
-	dirName = "image";
+	dirName = "static/js/image";
 }
 if(!extMap.containsKey(dirName)){
 	out.println(getError("目录名不正确。"));
