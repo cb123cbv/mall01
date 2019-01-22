@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!--引入jquery 一定放在第一行  -->
-    <script src="/jquery-2.1.1.min.js"></script>
+    <script src="/js/jquery-2.1.1.min.js"></script>
 
     <!--引入easyui的样式 -->
     <link rel="stylesheet" href="/js/easyui1.5/themes/default/easyui.css" type="text/css"></link>
@@ -21,7 +21,8 @@
      //一级分类
     function yjfl() {
         $('#class01').combobox({
-            url:'/json/class_1.js',
+
+            url:'/js/json/class_1.js',
             method:'get',
             valueField:'id',
             textField:'flmch1',
@@ -36,7 +37,7 @@
      var bb=null;
     function ejfl(id) {
      $('#class02').combobox({
-            url:'/json/class_2_'+id+'.js',
+            url:'/js/json/class_2_'+id+'.js',
             method:'get',
             valueField:'id',
             textField:'flmch2',
@@ -50,7 +51,7 @@
     //品牌
     function pp(id) {
      $('#class03').combobox({
-            url:'/json/tm_class_1_'+id+'.js',
+            url:'/js/json/tm_class_1_'+id+'.js',
             method:'get',
             valueField:'id',
             textField:'ppmch',
@@ -117,6 +118,8 @@
         		})
      }
     </script>
+
+
 
 </head>
 <body>
