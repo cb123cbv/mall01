@@ -19,6 +19,7 @@ public class AttrController {
     private AttrService attrService;
 
 
+
     @ResponseBody
     @RequestMapping("queryAttr")
     public List<MallAttr> queryAttr(MallAttr mallAttr) {
@@ -29,11 +30,15 @@ public class AttrController {
     }
 
 
+
+
     @RequestMapping("tospsxgl_add")
     public String tospsxgl_add(String queryid, Model model) {
         model.addAttribute("queryid",queryid);
         return "spsxgl_add";
     }
+
+
 
 
     @RequestMapping("adds")

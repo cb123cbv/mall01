@@ -1,11 +1,12 @@
 package com.jk.pojo;
 
-import java.util.List;
-
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class QueryParam {
+
 
 
     private List<Attr_value> attr_value;//用来储存批量增加的对象
