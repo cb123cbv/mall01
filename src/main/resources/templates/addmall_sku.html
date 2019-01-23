@@ -97,10 +97,10 @@
       		}
       		})
      }
-     var a=-1;
     function gb(check) {
-        //alert(id)
-        a++;
+        var arr=$(check).prop("name");
+        //alert(arr)
+        arr=arr.substr(17,1)
         var str=check.checked;
         var id=$(check).val();
         if(str) {
@@ -112,7 +112,7 @@
                     var count2="";
                     count2 += "<div id='sxmid_" + check.value + "'>"
                     $.each(result, function (index, obj) {
-                        count2 += "<input type='radio' name='mallSkuAttrValue["+a+"].shxzh_id' value=" + obj.id + ">" + obj.shxzh+obj.shxzh_mch ;
+                        count2 += "<input type='radio' name='mallSkuAttrValue["+arr+"].shxzh_id' value=" + obj.id + ">" + obj.shxzh+obj.shxzh_mch ;
                     })
                     count2 += "</div>"
                     $("#aaa").append(count2)

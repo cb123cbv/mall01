@@ -58,12 +58,13 @@ public class Mall_SkuServcieImpl implements Mall_SkuService {
      m.setId(m.getId());
      List<Mall_sku_attr_value> list = m.getMallSkuAttrValue();
      for (Mall_sku_attr_value value : list) {
-      value.setSku_id(m.getId());
-      value.setShp_id(m.getShp_id());
-      mapper.addMallSkuAttrValue(value);
+      if (value.getShxm_id() != null && value.getShxzh_id() != null) {
+       value.setSku_id(m.getId());
+       value.setShp_id(m.getShp_id());
+       mapper.addMallSkuAttrValue(value);
+      }
      }
     }
-
  @Override
  public List<Attr_value> getShu(Attr_value a) {
   return mapper.getShu(a.getShxm_id());
