@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.CommentMapper">
+
+    <!-- List<Product_comment> queryComment(Product_comment comment);-->
+    <select id="queryComment" resultType="com.jk.pojo.Product_comment">
+     select * from t_mall_product_comment where state = 0
+    </select>
+    
+    <!-- void updateState(Integer id,Integer flag);-->
+    <update id="updateState">
+        update t_mall_product_comment set state = #{flag} where id=#{id}
+    </update>
+
+</mapper>
