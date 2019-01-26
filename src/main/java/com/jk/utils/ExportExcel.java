@@ -54,17 +54,17 @@ public class ExportExcel {
         // 创建[标题]样式
         HSSFCellStyle titleStyle = workbook.createCellStyle();
         // 设置[标题]样式
-        titleStyle.setFillForegroundColor(HSSFColor.LIGHT_BLUE.index);
+        titleStyle.setFillForegroundColor(HSSFColor.TAN.index);//标题背景色:白色
         titleStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         titleStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         titleStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         titleStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
         titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 居中
         //创建[标题]字体
         HSSFFont titleFont = workbook.createFont();
         //设置[标题]字体
-        titleFont.setColor(HSSFColor.WHITE.index);
+        titleFont.setColor(HSSFColor.DARK_BLUE.index);//深蓝色
         titleFont.setFontHeightInPoints((short) 24);
         titleFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         // 把[标题字体]应用到[标题样式]
@@ -73,7 +73,7 @@ public class ExportExcel {
         // 创建[列首]样式
         HSSFCellStyle headersStyle = workbook.createCellStyle();
         // 设置[列首]样式
-        headersStyle.setFillForegroundColor(HSSFColor.LIGHT_ORANGE.index);
+        headersStyle.setFillForegroundColor(HSSFColor.TAN.index);//表头背景色:浅黄色
         headersStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         headersStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         headersStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -83,7 +83,7 @@ public class ExportExcel {
         //创建[列首]字体
         HSSFFont headersFont = workbook.createFont();
         //设置[列首]字体
-        headersFont.setColor(HSSFColor.VIOLET.index);
+        headersFont.setColor(HSSFColor.BLACK.index);//表头字体黑色
         headersFont.setFontHeightInPoints((short) 12);
         headersFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         // 把[列首字体]应用到[列首样式]
@@ -92,7 +92,7 @@ public class ExportExcel {
         // 创建[表中数据]样式
         HSSFCellStyle dataSetStyle = workbook.createCellStyle();
         // 设置[表中数据]样式
-        dataSetStyle.setFillForegroundColor(HSSFColor.GOLD.index);
+        dataSetStyle.setFillForegroundColor(HSSFColor.TAN.index);//数据背景浅黄色
         dataSetStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         dataSetStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         dataSetStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
