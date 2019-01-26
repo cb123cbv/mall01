@@ -16,4 +16,8 @@ public interface TitleMapper {
     TitleInfo getById(Integer id);
 
     void deletes(@Param("ids") String ids);
+
+    List<TitleInfo> getTitleList(String[] id);
+
+    void importTitle(TitleInfo title);
 }

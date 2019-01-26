@@ -125,7 +125,50 @@
             });
         }
 
+//------------------------------------------------------poi导出
+        function toExport(){
+            var arr = $('#dg').datagrid('getChecked');
+            if (arr.length == 0) {
+                $.messager.alert("提示","请选择要导出的数据!");
+            }else{
+                // 定义存放id数组，前端直接往后台传入数组类型，到mybatis xml文件直接批量删除操作
+                var ids = [];
+                for ( var i in arr) {
+                    // 将选中的每行数据遍历获取id放入数组当中
+                    ids.push(arr[i].id);
+                }
+                $.messager.confirm('提示','你确定导出'+arr.length+'条记录吗?',function(r){
+                    if(r){
+                        $.ajax({
+                            url:'/title/exportExcel',
+                            data:{id:ids},
+                            success:function(data){
+                                $.messager.alert('提示','导出成功');
+                                startDatagried();
+                            },
+                            error:function(){
+                                alert("导出失败");
+                            }
+                        })
+                    }
+                });
+            }
+        }
+//-----------------------------------------------poi导入
+        function toImport(){
+            $.ajax({
+                url:"/title/importExcel",
+                type:"post",
+                success:function(result){
 
+                    $.messager.alert('提示','导入成功');
+                    startDatagried();
+                },
+                error:function(){
+                    alert("导入失败");
+                }
+            })
+        }
     </script>
 
 
@@ -138,6 +181,10 @@
        data-options="iconCls:'icon-add'">添加</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" onClick="deleteDemo()"
        data-options="iconCls:'icon-cancel'">批量删除</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onClick="toImport()"
+        data-options="iconCls:'icon-redo'">导入</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onClick="toExport()"
+        data-options="iconCls:'icon-undo'">导出</a>
 </div>
 <!--列表展示信息 -->
 <table id="dg" fit=true></table>

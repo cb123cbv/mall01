@@ -47,5 +47,15 @@ public class TitleServiceImpl implements TitleService {
         titleMapper.deletes(ids);
     }
 
+    @Override
+    public List<TitleInfo> getTitleList(String[] id) {
+        return titleMapper.getTitleList(id);
+    }
+
+    @Override
+    public void importTitle(TitleInfo title) {
+        titleMapper.importTitle(title);
+    }
+
 
 }
