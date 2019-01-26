@@ -34,7 +34,7 @@
 
     <!-- poi导入 -->
     <!--void importTitle(TitleInfo title);-->
-    <insert id="importTitle" parameterType="com.jk.pojo.TitleInfo">
+    <insert id="importTitle" >
         insert into t_titleinfo (tname,turl)
         values (#{tname},#{turl})
     </insert>

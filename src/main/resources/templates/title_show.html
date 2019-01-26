@@ -16,8 +16,11 @@
         $(function () {
 
             startDatagried();
-            $('#dialog').dialog('close'); //关闭对话框
+            $('#dialog').dialog('close'); //关闭新增对话框
             addInfo();//新增
+            $('#dialogPoi').dialog('close'); //关闭 poi对话框
+            $('#dialog_style').dialog('close'); //关闭 模板对话框
+
         })
 //-----------------------------------------查询
         function startDatagried() {
@@ -154,20 +157,56 @@
                 });
             }
         }
-//-----------------------------------------------poi导入
-        function toImport(){
+//------------------------------------------------------poi导入
+        function poi_btn(){
+            $("#dialogPoi").dialog('open');//打开一个对话框------
+            //clearFormData();//新增之后 清除表单数据
+        }
+
+        function toImport() {
+            var formData = new FormData($("#form_poi")[0]);
+
             $.ajax({
                 url:"/title/importExcel",
-                type:"post",
+                data:formData,
+                type:"POST",
+                cache: false,
+                contentType: false,
+                processData: false,
                 success:function(result){
-                    $.messager.alert('提示','导入成功');
+                    if(result==1){
+                        $.messager.alert('提示','导入成功');
+                    }else{
+                        $.messager.alert('提示','文件格式不符,请输入 .xls 结尾的文件');
+                    }
+                    $('#dialogPoi').dialog('close'); //关闭poi对话框
                     startDatagried();
                 },
                 error:function(){
-                    alert("导入失败");
+                    alert("出错啦!!!");
                 }
             })
         }
+//-----打开上传文件模板 拼接表格
+        function openStyleDialog(){
+            var content = '';
+            $('#dialog_style').dialog('open');
+            content = '<tr align="center"><td colspan="5">标题</td></tr>';
+            content +='<tr align="center"><td>字段名:id(必填项)</td><td>字段名(比如:name)</td>\n' +
+                      '<td>字段名</td><td>字段名</td><td>.....</td></tr>';
+            for (var i = 0; i <3 ; i++) {
+                content +=' <tr align="center">\n' +
+                                '<td>'+(i+1)+'</td>\n' +
+                                '<td>工藤新'+(i+1)+'</td>\n' +
+                                '<td>.....</td>\n' +
+                                '<td>.....</td>\n' +
+                                '<td>.....</td>\n' +
+                            '</tr>';
+            }
+            $("#tableId").html(content);
+        }
+
+
     </script>
 
 
@@ -180,13 +219,60 @@
        data-options="iconCls:'icon-add'">添加</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" onClick="deleteDemo()"
        data-options="iconCls:'icon-cancel'">批量删除</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" onClick="toImport()"
+    <a href="javascript:void(0)" class="easyui-linkbutton" onClick="poi_btn()"
         data-options="iconCls:'icon-redo'">导入</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" onClick="toExport()"
         data-options="iconCls:'icon-undo'">导出</a>
 </div>
 <!--列表展示信息 -->
 <table id="dg" fit=true></table>
+
+<!-- 对话框窗口 导入-->
+<div id="dialogPoi"  class="easyui-dialog" title="My Dialog" style="width:400px;height:200px;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true,
+			buttons:[{
+				text:'保存',
+				iconCls:'icon-ok',
+				handler:function(){
+					toImport();//调用另一个方法
+				}
+			},{
+				text:'取消',
+				iconCls:'icon-clear',
+				handler:function(){
+					clearFormData();//新增之后 清除表单数据
+					$('#dialog').dialog('close'); //关闭对话框
+				}
+			}]">
+
+    <form id="form_poi">
+
+        <!--poi导入载体-->
+        点击Choose File 选择需要导入的文件: <input name="file" class="easyui-filebox" style="width:300px"><br>
+        导入文件模板:<a href="javascript:void(0)" class="easyui-linkbutton" onClick="openStyleDialog()"
+                  data-options="iconCls:'icon-tip'">点击查看</a>
+    </form>
+
+</div>
+<!-- 对话框窗口 模板-->
+<div id="dialog_style"  class="easyui-dialog" title="My Dialog" style="width:600px;height:400px;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true,
+			buttons:[{
+				text:'关闭',
+				iconCls:'icon-clear',
+				handler:function(){
+					$('#dialog_style').dialog('close'); //关闭对话框
+				}
+			}]">
+<form>
+    <table border="1" id="tableId"></table>
+</form>
+
+</div>
+
+
+
+
 <!-- 对话框窗口 -->
 <div id="dialog"  class="easyui-dialog" title="My Dialog" style="width:800px;height:300px;"
      data-options="iconCls:'icon-save',resizable:true,modal:true,
@@ -212,5 +298,6 @@
         跳转路径:<input name="turl" class="easyui-textbox"><br>
     </form>
 </div>
+
 </body>
 </html>
