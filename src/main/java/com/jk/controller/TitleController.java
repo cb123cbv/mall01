@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -53,7 +57,7 @@ public class TitleController {
         titleService.deletes(ids);
         return "1";
     }
-
+   String format="";
     //poi导出
     @ResponseBody
     @RequestMapping("exportExcel")
@@ -62,18 +66,23 @@ public class TitleController {
         String titleName="mall项目中的标题列表";
         String[] headers = { "标题ID", "商品名称", "标题跳转路径"};
         List<TitleInfo> dataSet = titleService.getTitleList(id);
-        String resultUrl="E:\\poiTemp\\titleInfo.xls";
+        /*生成桌面路径*/
+        FileSystemView fsv = FileSystemView.getFileSystemView();
+        File com=fsv.getHomeDirectory();
+        SimpleDateFormat sb=new SimpleDateFormat("yyyy-MM-ddHHmmss");
+        format = sb.format(new Date());
+        String resultUrl=com+"\\"+format+".xls";
         String pattern="yyyy-MM-dd";
-
         ExportExcel.exportExcel(sheetName, titleName, headers, dataSet, resultUrl, pattern);
         return "success";
     }
-
     //poi导入
     @ResponseBody
     @RequestMapping("importExcel")
     public String importExcel() throws Exception{
-        String originUrl="E:\\poiTemp\\titleInfo.xls";
+        FileSystemView fsv = FileSystemView.getFileSystemView();
+        File com=fsv.getHomeDirectory();
+        String originUrl=com+"\\"+format+".xls";
         int startRow=2;
         int endRow=0;
         List<TitleInfo> titleList = (List<TitleInfo>) ImportExcel.importExcel(originUrl, startRow, endRow, TitleInfo.class);
