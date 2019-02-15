@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+
+<form id="form_id">
+    收件人邮箱:<input type="text" name="to"/><br/>
+    标题:<input type="text" name="subject"/><br/>
+    内容:<input type="text" name="text"><br/>
+
+</form>
+ <input type="button" onclick="sendEmail()" value="发送"><br/>
+
+
+
+
+</body>
+<script type="text/javascript" th:inline="none">
+
+    function sendEmail(){
+        	$.ajax({
+        			url:"/mail/sendSimpleMail",
+        			type:"POST",
+        			data:$("#form_id").serialize(),
+        			success:function(result){
+
+                        alert("发送成功");
+        			},
+        			error:function(){
+        				alert("失败了");
+        			}
+        			});
+
+
+
+
+    }
+
+
+
+
+
+</script>
+</html>

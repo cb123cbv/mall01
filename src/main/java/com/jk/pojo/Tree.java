@@ -7,6 +7,7 @@ package com.jk.pojo;/**
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /** &lt;pre&gt;(这里用一句话描述这个方法的作用)
@@ -15,7 +16,7 @@ import java.util.List;
  * &lt;/pre&gt;    
  */
 @Data
-public class Tree {
+public class Tree implements Serializable {
  Integer id;
  String text;
  Integer pid;
