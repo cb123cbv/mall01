@@ -1,7 +1,6 @@
 package com.jk.utils;
 
 import org.apache.commons.io.FileUtils;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,32 +12,85 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
-/**
- * <pre>
- * 项目名称：springmvc_upload    
- * 类名称：FileUtil    
- * 类描述：    
- * 创建人：wzstart    
- * 创建时间：2018-10-13 上午9:41:30    
- * 修改人：wzstart  
- * 修改时间：2018-10-13 上午9:41:30    
- * 修改备注：       
- * @version
- * </pre>
- */
 public class FileUtil {
+	
+	private static final String url = "upload";
+	
+	/**
+	 *   poi  上传文件方法
+	 *
+	 */
+	public static String FileUpload(MultipartFile file, HttpServletRequest request){
+
+		//保存文件的目标目录
+       String savePath = request.getSession().getServletContext().getRealPath(url);
+		
+		//获取源文件后缀名称
+		//12345.jpg
+		int suffixIndex = file.getOriginalFilename().lastIndexOf(".");
+		//  .jpg
+		String suffixName = file.getOriginalFilename().substring(suffixIndex);
+
+		String newFileName = UUID.randomUUID().toString().replace("-", "") + suffixName;
+		
+		//检测目标目录是否存在
+		File targetFile = new File(savePath, newFileName);
+		if(!targetFile.exists()){
+			//创建目标目录
+			targetFile.mkdirs();
+		}
+
+		try {
+			// 使用transferTo（dest）方法将上传文件写到服务器上指定的文件。
+			file.transferTo(targetFile);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		savePath = url + "/" + newFileName;
+		return savePath;
+	}
 
 	/**
-	 * <pre>
-	 * upload(这里用一句话描述这个方法的作用)   
-	 * 创建人：wzstart     
-	 * 创建时间：2018-10-13 上午9:43:06    
-	 * 修改人：wzstart      
-	 * 修改时间：2018-10-13 上午9:43:06    
-	 * 修改备注：
-	 * </pre>
+	 * 文件下载方法
+	 * @param filePath 文件路径
+	 * @return
 	 */
+	public static ResponseEntity<byte[]> FileDownload(String filePath, String fileName){
+
+		ResponseEntity<byte[]> entity = null;
+
+		//获取源文件地址
+
+		//获取源文件
+		File sourceFile = new File(filePath);
+
+		//设置头部信息（文件信息包括文件名称和下载文件类型）
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDispositionFormData("attachment", fileName);
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+		//文件下载
+		try {
+			entity = new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(sourceFile), headers, HttpStatus.CREATED);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	/**
+	 * 文件上传方法  图片
+	 * @return
+	 */
+
 	public static String upload(MultipartFile file, HttpServletRequest request) {
 
 		if (file != null && file.getSize() > 0) {
@@ -78,37 +130,6 @@ public class FileUtil {
 
 	}
 
-	/**
-	 * <pre>
-	 * download(这里用一句话描述这个方法的作用)   
-	 * 创建人：wzstart     
-	 * 创建时间：2018-10-13 上午9:56:48    
-	 * 修改人：wzstart      
-	 * 修改时间：2018-10-13 上午9:56:48    
-	 * 修改备注：
-	 * </pre>
-	 */
-	public static ResponseEntity<byte[]> download(HttpServletRequest request, String filename) {
-		// 获取文件的在服务器地址
-		String realPath = request.getServletContext().getRealPath("upload");
-		// 要下载的文件对象
-		File downloadFile = new File(realPath, filename);
 
-		// 设置http的响应头
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDispositionFormData("attachment", filename);
-		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-
-		// 设置下载的内容
-		ResponseEntity<byte[]> entity = null;
-		try {
-			entity = new ResponseEntity<byte[]>(
-					FileUtils.readFileToByteArray(downloadFile), headers,
-					HttpStatus.CREATED);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return entity;
-	}
 
 }

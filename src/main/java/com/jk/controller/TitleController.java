@@ -2,22 +2,17 @@ package com.jk.controller;
 
 import com.jk.pojo.TitleInfo;
 import com.jk.service.TitleService;
-import com.jk.utils.ExportExcel;
-import com.jk.utils.ImportExcel;
-import com.jk.utils.ReceivePage;
-import com.jk.utils.SendPage;
+import com.jk.utils.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.swing.filechooser.FileSystemView;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("title")
@@ -60,37 +55,48 @@ public class TitleController {
     }
 
 
-    //poi导出
-    String format = "";
 
-    @ResponseBody
-    @RequestMapping("exportExcel")
-    public String exportExcel(@RequestParam("id[]") String[] id) throws Exception {
-        String sheetName = "标题列表";
-        String titleName = "mall项目中的标题列表";
-        String[] headers = {"标题ID", "商品名称", "标题跳转路径"};
-        List<TitleInfo> dataSet = titleService.getTitleList(id);
-        /*生成桌面路径*/
-        FileSystemView fsv = FileSystemView.getFileSystemView();
-        File com = fsv.getHomeDirectory();
-        /*时间戳*/
-        SimpleDateFormat sb = new SimpleDateFormat("yyyy-MM-ddHHmmss");
-        format = sb.format(new Date());
-        String resultUrl = com + "\\" + format + ".xls";
-        String pattern = "yyyy-MM-dd";
+    //poi导出(升级版)
+     @ResponseBody
+     @RequestMapping("exportExcel")
+     public ResponseEntity<byte[]> exportExcel(String ids) throws Exception {
+         String sheetName = "标题列表";
+         String titleName = "mall项目中的标题列表";
+         String[] headers = {"标题ID", "商品名称", "标题跳转路径"};
+         List<TitleInfo> dataSet = titleService.queryTitleList(ids);
 
-        ExportExcel.exportExcel(sheetName, titleName, headers, dataSet, resultUrl, pattern);
-        return "success";
-    }
+         String replace = UUID.randomUUID().toString().replace("-", "");
+
+         String fileDir = "E:\\poi\\";
+
+         File file = new File(fileDir);
+         if (!file.exists()) {
+            file.mkdirs();
+         }
+         String randomPath = fileDir + replace+".xls";
+
+         String pattern = "yyyy-MM-dd";
+
+         ExportExcel.exportExcel(sheetName, titleName, headers, dataSet, randomPath, pattern);
+
+         return FileUtil.FileDownload(randomPath,"fileName.xls");
+
+     }
+
+
+
+
+
+
+
+
+
+
 
     //poi导入
     @ResponseBody
     @RequestMapping("importExcel")
     public String importExcel(MultipartFile file) throws Exception {
-      /*  FileSystemView fsv = FileSystemView.getFileSystemView();
-        File com=fsv.getHomeDirectory();
-        System.out.println(com);*/
-        //String originUrl=com+"\\"+format+".xls";
 
         String filePath = file.getOriginalFilename();
         System.out.println(filePath);

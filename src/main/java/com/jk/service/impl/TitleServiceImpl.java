@@ -47,14 +47,16 @@ public class TitleServiceImpl implements TitleService {
         titleMapper.deletes(ids);
     }
 
-    @Override
-    public List<TitleInfo> getTitleList(String[] id) {
-        return titleMapper.getTitleList(id);
-    }
 
     @Override
     public void importTitle(TitleInfo title) {
         titleMapper.importTitle(title);
+    }
+
+    //poi导出升级版
+    @Override
+    public List<TitleInfo> queryTitleList(String ids) {
+        return titleMapper.queryTitleList(ids);
     }
 
 

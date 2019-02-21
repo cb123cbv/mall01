@@ -15,7 +15,8 @@ public interface TitleService {
 
     void deletes(String ids);
 
-    List<TitleInfo> getTitleList(String[] id);
 
     void importTitle(TitleInfo title);
+    //poi导出升级版
+    List<TitleInfo> queryTitleList(String ids);
 }

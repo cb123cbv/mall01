@@ -23,14 +23,6 @@
         delete from t_titleinfo where id in (${ids})
     </delete>
 
-    <!-- poi导出 -->
-    <!--List<TitleInfo> getTitleList(String[] id);-->
-    <select id="getTitleList" resultType="com.jk.pojo.TitleInfo">
-        select * from t_titleinfo where id in
-        <foreach collection="array" item="id" open="(" close=")" index="index" separator=",">
-            #{id}
-        </foreach>
-    </select>
 
     <!-- poi导入 -->
     <!--void importTitle(TitleInfo title);-->
@@ -39,4 +31,9 @@
         values (#{tname},#{turl})
     </insert>
 
+    <!-- poi导出升级版 -->
+    <!--List<TitleInfo> queryTitleList(String ids);-->
+    <select id="queryTitleList" resultType="com.jk.pojo.TitleInfo">
+        select * from t_titleinfo where id in (${_parameter})
+    </select>
 </mapper>

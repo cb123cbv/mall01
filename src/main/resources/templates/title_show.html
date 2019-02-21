@@ -135,28 +135,24 @@
                 $.messager.alert("提示","请选择要导出的数据!");
             }else{
                 // 定义存放id数组，前端直接往后台传入数组类型，到mybatis xml文件直接批量删除操作
-                var ids = [];
+                var ids = "";
                 for ( var i in arr) {
                     // 将选中的每行数据遍历获取id放入数组当中
-                    ids.push(arr[i].id);
+                    //ids.push(arrUser[i].id);
+                    ids+=","+arr[i].id;
                 }
+                ids = ids.substr(1);
                 $.messager.confirm('提示','你确定导出'+arr.length+'条记录吗?',function(r){
-                    if(r){
-                        $.ajax({
-                            url:'/title/exportExcel',
-                            data:{id:ids},
-                            success:function(data){
-                                $.messager.alert('提示','导出成功');
-                                startDatagried();
-                            },
-                            error:function(){
-                                alert("导出失败");
-                            }
-                        })
-                    }
+                    location.href="/title/exportExcel?ids="+ids
                 });
             }
         }
+
+
+
+
+
+
 //------------------------------------------------------poi导入
         function poi_btn(){
             $("#dialogPoi").dialog('open');//打开一个对话框------
