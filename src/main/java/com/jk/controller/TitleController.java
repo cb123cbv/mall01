@@ -1,6 +1,8 @@
 package com.jk.controller;
 
+import com.jk.pojo.ImgInfo;
 import com.jk.pojo.TitleInfo;
+import com.jk.pojo.TitleMin;
 import com.jk.service.TitleService;
 import com.jk.utils.*;
 import org.springframework.http.ResponseEntity;
@@ -83,16 +85,6 @@ public class TitleController {
 
      }
 
-
-
-
-
-
-
-
-
-
-
     //poi导入
     @ResponseBody
     @RequestMapping("importExcel")
@@ -113,6 +105,70 @@ public class TitleController {
             return "0";
         }
     }
+//------------------------------------------增删改查-----轮播图----------------------
+    //查询
+    @RequestMapping("queryImgInfo")
+    @ResponseBody
+    public SendPage queryImgInfo(ReceivePage receivePage, ImgInfo imgInfo) {
+        SendPage imgList = titleService.queryImgInfo(receivePage, imgInfo);
+        return imgList;
+    }
 
+    // 新增
+    @RequestMapping("addImgInfo")
+    @ResponseBody
+    public String addImgInfo(ImgInfo imgInfo) {
+        titleService.addImgInfo(imgInfo);
+        return "";
+    }
 
+    //根据id  回显
+    @RequestMapping("getImgById")
+    @ResponseBody
+    public ImgInfo getImgById(Integer id) {
+        ImgInfo img = titleService.getImgById(id);
+        return img;
+    }
+
+    //删除
+    @ResponseBody
+    @RequestMapping("deleteImg")
+    public String deleteImg(String ids) {
+        titleService.deleteImg(ids);
+        return "1";
+    }
+
+//------------------------------------------增删改查-----轮播标题----------------------
+    //查询
+    @RequestMapping("queryTitleMin")
+    @ResponseBody
+    public SendPage queryTitleMin(ReceivePage receivePage, TitleMin titleMin) {
+        SendPage minTitle = titleService.queryTitleMin(receivePage, titleMin);
+        return minTitle;
+    }
+
+    // 新增
+    @RequestMapping("addTitleMin")
+    @ResponseBody
+    public String addTitleMin(TitleMin titleMin) {
+
+        titleService.addTitleMin(titleMin);
+        return "";
+    }
+
+    //根据id  回显
+    @RequestMapping("getTitleMinById")
+    @ResponseBody
+    public TitleMin getTitleMinById(Integer id) {
+        TitleMin titleMin = titleService.getTitleMinById(id);
+        return titleMin;
+    }
+
+    //删除
+    @ResponseBody
+    @RequestMapping("deleteTitleMin")
+    public String deleteTitleMin(String ids) {
+        titleService.deleteTitleMin(ids);
+        return "1";
+    }
 }

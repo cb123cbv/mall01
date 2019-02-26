@@ -36,4 +36,50 @@
     <select id="queryTitleList" resultType="com.jk.pojo.TitleInfo">
         select * from t_titleinfo where id in (${_parameter})
     </select>
+
+<!--      ImgInfo      -->
+
+    <!--List<ImgInfo> queryImgInfo(ImgInfo imgInfo);-->
+    <select id="queryImgInfo" resultType="com.jk.pojo.ImgInfo">
+        select * from t_imginfo
+    </select>
+    <!--void addImgInfo(ImgInfo imgInfo);-->
+    <insert id="addImgInfo">
+        insert into t_imginfo(imgName,imgUrl) values(#{imgName},#{imgUrl})
+    </insert>
+    <!--ImgInfo getImgById(Integer id);-->
+    <select id="getImgById" resultType="com.jk.pojo.ImgInfo">
+        select * from t_imginfo where id=#{id}
+    </select>
+    <!--void updateImgInfo(ImgInfo imgInfo);-->
+    <update id="updateImgInfo">
+        update t_imginfo set imgName=#{imgName},imgUrl=#{imgUrl} where id=#{id}
+    </update>
+    <!--void deleteImg(String ids);-->
+    <delete id="deleteImg">
+        delete from t_imginfo where id in (${ids})
+    </delete>
+
+    <!--      TitleMin      -->
+
+    <!--List<TitleMin> queryTitleMin(TitleMin titleMin);-->
+    <select id="queryTitleMin" resultType="com.jk.pojo.TitleMin">
+    select * from t_title_min
+    </select>
+    <!--void addTitleMin(TitleMin titleMin);-->
+    <insert id="addTitleMin">
+        insert into t_title_min(tiname,tiurl) values(#{tiname},#{tiurl})
+    </insert>
+    <!--void updateTitleMin(TitleMin titleMin);-->
+    <update id="updateTitleMin">
+        update t_title_min set tiname=#{tiname},tiurl=#{tiurl} where id=#{id}
+    </update>
+    <!--TitleMin getTitleMinById(Integer id);-->
+    <select id="getTitleMinById" resultType="com.jk.pojo.TitleMin">
+    select * from t_title_min where id=#{id}
+    </select>
+    <!--void deleteTitleMin(String ids);-->
+    <delete id="deleteTitleMin">
+        delete from t_title_min where id in (${ids})
+    </delete>
 </mapper>
